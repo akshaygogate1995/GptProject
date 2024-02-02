@@ -1,7 +1,7 @@
-param vnetName string = 'MyVNet'
-param addressPrefix string = '10.0.0.0/16'
-param subnetName string = 'MySubnet'
-param subnetPrefix string = '10.0.0.0/24'
+param vnetName string 
+param addressPrefix string 
+param subnetName string
+param subnetPrefix string
 
 // Define the VNet
 resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
