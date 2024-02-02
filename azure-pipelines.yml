@@ -1,0 +1,49 @@
+trigger:
+- main  # You can adjust the branch trigger as needed
+
+
+pool:
+  vmImage: 'ubuntu-latest'  # You can choose a different image based on your requirements
+
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+
+- script: |
+    npm install -g azure-cli
+    az extension add --name azure-devops
+  displayName: 'Install Azure CLI'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Free Trial(f9f21340-7841-4321-9538-ec215bd49593)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az account set --subscription $(Subscription_Id)
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Free Trial(f9f21340-7841-4321-9538-ec215bd49593)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az group create --name poc-rg123 --location centralus
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Free Trial(f9f21340-7841-4321-9538-ec215bd49593)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az deployment group what-if --resource-group poc-rg123 --template-file ./staticwebapp.bicep
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Free Trial(f9f21340-7841-4321-9538-ec215bd49593)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az deployment group create --resource-group poc-rg123 --template-file ./staticwebapp.bicep
