@@ -18,7 +18,7 @@ param subnetPrefix string = '10.0.0.0/24'
 param someParameter string = 'someValue'
 
 // Importing the three existing Bicep files
-module functionApp './functionapp.bicep' = {
+module functionApp './func_storage.bicep' = {
   name: 'functionAppModule'
   params: {
     storageAccountName: storageAccountName
@@ -27,7 +27,7 @@ module functionApp './functionapp.bicep' = {
   }
 }
 
-module staticWebApp './staticwebapp.bicep' = {
+module staticWebApp './blazorswa.bicep' = {
   name: 'staticWebAppModule'
   params: {
     location: location
