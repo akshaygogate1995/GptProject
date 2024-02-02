@@ -1,6 +1,6 @@
-param storageAccountName string = 'yourstorage1001me'
-param functionAppName string = 'yourfun100195'
-param location string = 'eastus2'
+param storageAccountName string
+param functionAppName string
+param location string 
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   name: storageAccountName
